@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "alzheimer-s-disease-prediction"
+version = "0.1.0"
+description = "Machine learning project intended to predict, based on parameters, whether a person has Alzheimer's disease."
+authors = ["Mikol <mikolaj.karapka@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.2.1"
+pandas = "^2.2.3"
+matplotlib = "^3.10.0"
+scikit-learn = "^1.6.0"
+kagglehub = "^0.3.6"
+notebook = "^7.3.2"
+ipykernel = "^6.29.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+install-kernel = "scripts.install_kernel:main"
