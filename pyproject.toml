@@ -16,6 +16,7 @@ scikit-learn = "^1.6.0"
 kagglehub = "^0.3.6"
 notebook = "^7.3.2"
 ipykernel = "^6.29.5"
+seaborn = "^0.13.2"
 
 
 [build-system]
