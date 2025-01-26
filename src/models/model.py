@@ -21,3 +21,7 @@ class Model_Clf(ABC):
     @abstractmethod
     def gridsearch(self, X_train, y_train, param_grid):
         pass
+
+    @abstractmethod
+    def show(self):
+        pass
