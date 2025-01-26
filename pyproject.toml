@@ -17,6 +17,11 @@ kagglehub = "^0.3.6"
 notebook = "^7.3.2"
 ipykernel = "^6.29.5"
 seaborn = "^0.13.2"
+interpret-core = {extras = ["visualization"], version = "^0.6.9"}
+gevent = "^24.11.1"
+typing-extensions = "^4.12.2"
+dash-cytoscape = "^1.0.2"
+imblearn = "^0.0"
 
 
 [build-system]
