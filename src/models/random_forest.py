@@ -14,7 +14,7 @@ class Random_Forest_(Model_):
         max_depth = trial.suggest_int("max_depth", 1, 30)
         min_samples_split = trial.suggest_int("min_samples_split", 2, 20)
         min_samples_leaf = trial.suggest_int("min_samples_leaf", 1, 20)
-        max_features = trial.suggest_categorical("max_features", ["auto", "sqrt", "log2"])
+        max_features = trial.suggest_categorical("max_features", ["sqrt", "log2", None])
 
         # Create the model with the sampled hyperparameters
         model = RandomForestClassifier(
@@ -28,4 +28,5 @@ class Random_Forest_(Model_):
 
         # Perform cross-validation and return the mean score
         scores = cross_val_score(model, X, y, cv=3)
+
         return scores.mean()
