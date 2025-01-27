@@ -1,6 +1,7 @@
+from sklearn.metrics import make_scorer, recall_score
 from sklearn.ensemble import RandomForestClassifier
-from models.model_ import Model_
 from sklearn.model_selection import cross_val_score
+from models.model_ import Model_
 
 
 class Random_Forest_(Model_):
@@ -26,7 +27,8 @@ class Random_Forest_(Model_):
             random_state=42
         )
 
-        # Perform cross-validation and return the mean score
-        scores = cross_val_score(model, X, y, cv=3)
+        # Use recall as the scoring metric
+        recall_scorer = make_scorer(recall_score, average="weighted")
+        scores = cross_val_score(model, X, y, cv=5, scoring=recall_scorer)
 
         return scores.mean()
