@@ -26,7 +26,8 @@ class Random_Forest_(Model_):
             min_samples_split=min_samples_split,
             min_samples_leaf=min_samples_leaf,
             max_features=max_features,
-            random_state=42
+            random_state=42,
+            n_jobs=-1,
         )
 
         # Use recall as the scoring metric
@@ -34,7 +35,7 @@ class Random_Forest_(Model_):
         scores = cross_val_score(model, X, y, cv=5, scoring=recall_scorer)
 
         return scores.mean()
-    
+
     def visualize_results(self, study):
         # Wizualizacja wyników optymalizacji
         plot_optimization_results(study, title="Random Forest Optimization")
