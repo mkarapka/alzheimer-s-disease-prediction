@@ -32,4 +32,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-install-kernel = "scripts.install_kernel:main"
+install-kernel = "utl.scripts.install_kernel:main"

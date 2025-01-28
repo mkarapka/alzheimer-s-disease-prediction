@@ -21,10 +21,12 @@ class Model_(ABC):
 
     def bayesian_opt(self, X, y, n_trials=100):
         model = type(self.model)
-
         study = optuna.create_study(direction="maximize")
         study.optimize(lambda t: self.objective(t, X, y), n_trials=n_trials)
 
         self.best_params = study.best_params
         self.best_estimator = model(**self.best_params)
-        return study.best_value
+
+        # Zwróć study, a nie tylko best_value
+        return study
+    

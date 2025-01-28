@@ -1,6 +1,7 @@
 from models.model_ import Model_
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
+from visualization import plot_optimization_results, plot_best_parameters
 
 
 class Logistic_Regression_(Model_):
@@ -36,3 +37,8 @@ class Logistic_Regression_(Model_):
         # 5️⃣ Walidacja krzyżowa (5-fold)
         score = cross_val_score(model, X, y, cv=5, scoring="accuracy").mean()
         return score
+    
+    def visualize_results(self, study):
+        plot_optimization_results(study, title="Logistic Regression Optimization")
+        plot_best_parameters(study, title="Logistic Regression Best Parameters")
+

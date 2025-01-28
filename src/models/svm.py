@@ -1,7 +1,7 @@
-from models.model_ import Model_
+from .model_ import Model_
 from sklearn.svm import SVC
-import matplotlib.pyplot as plt
 from sklearn.model_selection import cross_val_score
+from visualization import plot_optimization_results, plot_best_parameters
 
 
 class SVM(Model_):
@@ -21,3 +21,7 @@ class SVM(Model_):
         model = SVC(C=C, gamma=gamma, kernel=kernel, degree=degree, coef0=coef0)
         scores = cross_val_score(model, X, y, cv=3)
         return scores.mean()
+    
+    def visualize_results(self, study):
+        plot_optimization_results(study, title="SVM Optimization")
+        plot_best_parameters(study, title="SVM Best Parameters")

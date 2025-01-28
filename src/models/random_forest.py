@@ -1,7 +1,9 @@
 from sklearn.metrics import make_scorer, recall_score
+from sklearn.metrics import make_scorer, recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from models.model_ import Model_
+from visualization import plot_optimization_results, plot_best_parameters
 
 
 class Random_Forest_(Model_):
@@ -32,3 +34,9 @@ class Random_Forest_(Model_):
         scores = cross_val_score(model, X, y, cv=5, scoring=recall_scorer)
 
         return scores.mean()
+    
+    def visualize_results(self, study):
+        # Wizualizacja wyników optymalizacji
+        plot_optimization_results(study, title="Random Forest Optimization")
+        # Wizualizacja najlepszych parametrów
+        plot_best_parameters(study, title="Random Forest Best Parameters")
