@@ -1,7 +1,5 @@
 from models.model_ import Model_
 import xgboost as xgb
-from sklearn.metrics import accuracy_score
-import optuna
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import (
     accuracy_score,
@@ -11,6 +9,7 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 import numpy as np
+from functions.visualization import plot_optimization_results, plot_best_parameters
 
 
 class XGBoost(Model_):
@@ -20,7 +19,7 @@ class XGBoost(Model_):
         super().__init__(self.model)
 
     def objective(self, trial, X, y):
-
+        device = "gpu" if xgb.rabit.get_world_size() > 1 else "cpu"
         params = {
             "max_depth": trial.suggest_int("max_depth", 3, 10),
             "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
@@ -31,10 +30,11 @@ class XGBoost(Model_):
             "lambda": trial.suggest_float("lambda", 1e-8, 10.0, log=True),
             "alpha": trial.suggest_float("alpha", 1e-8, 10.0, log=True),
             "min_child_weight": trial.suggest_int("min_child_weight", 1, 10),
-            # "tree_method": "gpu_hist",  # ✅ Włączenie GPU
+            "tree_method": "hist",
+            "device": device,
         }
 
-        accuracies = []
+        recalls = []
 
         # 🔹 Ręczna walidacja K-Fold
         for train_idx, val_idx in self.cv.split(X, y):
@@ -50,7 +50,11 @@ class XGBoost(Model_):
 
             # Predykcja i ocena
             y_pred = model.predict(X_val_fold)
-            acc = accuracy_score(y_val_fold, y_pred)
-            accuracies.append(acc)
+            acc = recall_score(y_val_fold, y_pred)
+            recalls.append(acc)
 
-        return np.mean(accuracies)  # Zwracamy średnią dokładność z walidacji krzyżowej
+        return np.mean(recalls)  # Zwracamy średnią dokładność z walidacji krzyżowej
+
+    def visualize_results(self, study):
+        plot_optimization_results(study, title="SVM Optimization")
+        plot_best_parameters(study, title="SVM Best Parameters")
