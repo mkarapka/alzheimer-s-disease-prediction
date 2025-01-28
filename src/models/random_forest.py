@@ -3,7 +3,7 @@ from sklearn.metrics import make_scorer, recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from models.model_ import Model_
-from visualization import plot_optimization_results, plot_best_parameters
+from functions.visualization import plot_optimization_results, plot_best_parameters
 
 
 class Random_Forest_(Model_):
