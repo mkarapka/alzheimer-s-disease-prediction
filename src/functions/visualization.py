@@ -16,10 +16,10 @@ def plot_optimization_results(study, title="Optimization Results"):
 
     # Filter only numeric parameter columns for pairplot
     param_cols = [col for col in trials_df.columns if col.startswith("params_")]
-    
+
     # Filter only numeric columns
     numeric_cols = [col for col in param_cols if trials_df[col].dtype in ['int64', 'float64']]
-    
+
     # If there are more than 1 numeric parameters, create pairplot
     if len(numeric_cols) > 1:
         sns.pairplot(trials_df, vars=numeric_cols, hue="value", palette="coolwarm", diag_kind="kde")
@@ -46,10 +46,10 @@ def plot_best_parameters(study, title="Best Parameters Distribution"):
     param_cols = [col for col in trials_df.columns if col.startswith("params_")]
     for param in param_cols:
         plt.figure(figsize=(8, 6))
-        
+
         # Update the boxplot to prevent the FutureWarning
         sns.boxplot(x=trials_df[param], y=trials_df["value"], palette="pastel", hue=trials_df[param], legend=False)
-        
+
         plt.title(f"{title} - {param}")
         plt.ylabel("Objective Value")
         plt.xlabel(param)

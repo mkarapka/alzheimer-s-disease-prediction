@@ -14,16 +14,12 @@ class Logistic_Regression_(Model_):
         solver_choices = ["liblinear", "saga", "newton-cg", "sag", "lbfgs"]
         penalty_choices = ["l1", "l2", "none"]  # Pełna lista możliwości
 
-        # 1️⃣ Sugerujemy solver
         solver = trial.suggest_categorical("solver", solver_choices)
 
-        # 2️⃣ Sugerujemy penalty (bez dynamicznych zmian)
         penalty = trial.suggest_categorical("penalty", penalty_choices)
 
-        # 3️⃣ Wybór parametru C
         C = trial.suggest_float("C", 0.001, 100, log=True)
 
-        # 4️⃣ Filtrujemy niedozwolone kombinacje
         invalid_combinations = (
             (solver in ["newton-cg", "sag", "lbfgs"] and penalty != "l2")
             or (solver == "liblinear" and penalty not in ["l1", "l2"])
@@ -31,7 +27,7 @@ class Logistic_Regression_(Model_):
         )
 
         if invalid_combinations:
-            raise optuna.TrialPruned()  # Odrzucamy niepoprawne kombinacje
+            raise optuna.TrialPruned()
 
         model = LogisticRegression(
             solver=solver, penalty=penalty if penalty != "none" else None, C=C

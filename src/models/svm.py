@@ -15,8 +15,8 @@ class SVM(Model_):
         kernel = trial.suggest_categorical(
             "kernel", ["linear", "poly", "rbf", "sigmoid"]
         )
-        degree = trial.suggest_int("degree", 2, 5)  # Only for poly
-        coef0 = trial.suggest_float("coef0", 0.0, 1.0)  # Only for poly and sigmoid
+        degree = trial.suggest_int("degree", 2, 5)
+        coef0 = trial.suggest_float("coef0", 0.0, 1.0)
 
         model = SVC(C=C, gamma=gamma, kernel=kernel, degree=degree, coef0=coef0)
         scores = cross_val_score(model, X, y, cv=5, scoring="recall")

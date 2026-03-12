@@ -2,11 +2,7 @@ from models.model_ import Model_
 import xgboost as xgb
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import (
-    accuracy_score,
-    f1_score,
-    precision_score,
     recall_score,
-    roc_auc_score,
 )
 import numpy as np
 from functions.visualization import plot_optimization_results, plot_best_parameters
@@ -44,16 +40,14 @@ class XGBoost(Model_):
             )
             y_train_fold, y_val_fold = y[train_idx], y[val_idx]
 
-            # Tworzenie modelu i trening
             model = xgb.XGBClassifier(eval_metric="auc", **params, n_jobs=-1)
             model.fit(X_train_fold, y_train_fold)
 
-            # Predykcja i ocena
             y_pred = model.predict(X_val_fold)
             acc = recall_score(y_val_fold, y_pred)
             recalls.append(acc)
 
-        return np.mean(recalls)  # Zwracamy średnią dokładność z walidacji krzyżowej
+        return np.mean(recalls)
 
     def visualize_results(self, study):
         plot_optimization_results(study, title="SVM Optimization")

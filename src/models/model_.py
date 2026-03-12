@@ -1,23 +1,12 @@
-from abc import ABC, abstractmethod
 import optuna
 
 
-class Model_(ABC):
+class Model_:
     def __init__(self, model):
         self.name = model.__class__.__name__
         self.model = model
         self.best_params = None
         self.best_estimator = None
-
-    def predict(self, X_test, y_test):
-        pass
-
-    def show(self):
-        pass
-
-    @abstractmethod
-    def objective(self, trial, X, y):
-        pass
 
     def bayesian_opt(self, X, y, n_trials=100):
         model = type(self.model)
@@ -27,6 +16,5 @@ class Model_(ABC):
         self.best_params = study.best_params
         self.best_estimator = model(**self.best_params)
 
-        # Zwróć study, a nie tylko best_value
         return study
-    
+
